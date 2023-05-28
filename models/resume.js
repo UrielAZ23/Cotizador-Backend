@@ -6,6 +6,10 @@ var Schema = mongoose.Schema;
 var ResumeSchema = Schema({
     idFeature:String,
     idArticle:String,
-    amount:Number
+    amount:Number,
+    cost:Number,
+    total:Number
     
 })
+
+module.exports=mongoose.model('Resume',ResumeSchema);

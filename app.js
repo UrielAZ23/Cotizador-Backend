@@ -12,6 +12,7 @@ var app = express();
 var article_routes =require('./routes/article')
 var customer_routes =require('./routes/customer')
 var feature_routes = require('./routes/feature')
+var resume_routes = require('./routes/resume')
 
 //cargar Middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 app.use('/',article_routes);
 app.use('/',customer_routes);
 app.use('/',feature_routes);
+app.use('/',resume_routes);
 
 
 

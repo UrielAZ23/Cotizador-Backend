@@ -13,5 +13,6 @@ router.get('/getFeature/:id',CustomerController.getFeature);
 router.put('/updateFeature/:id',CustomerController.updateFeature);
 router.delete('/deleteFeature/:id',CustomerController.deleteFeature);
 
+router.post('/searchFeature',CustomerController.searchFeature);
 
 module.exports=router;

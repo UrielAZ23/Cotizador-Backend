@@ -21,20 +21,10 @@ var controller={
         var params= req.body
 
         //validar datos
-
-        try {
-            var validator_customer=validator.isEmpty(params.customer);
-            var validator_account=validator.isDecimal(params.account);
-            var validator_status=validator.isBoolean(params.status);
-            
-        } catch (error) {
-            return res.status(404).send({
-                status:'error',
-                message:'Ha ocurrido algo',
-            })
-        }
         
-        if(validator_account && !validator_customer && validator_status){
+    
+        
+        if(params.account!=null && params.customer!=null && params.status!=null){
             //crear el objeto
 
             var feature = new Feature()
@@ -51,6 +41,7 @@ var controller={
                     return res.status(200).send({
                         status:'success',
                         message:'vas bien',
+                        result
                     })
                 }else{
                     return res.status(404).send({
@@ -140,11 +131,11 @@ var controller={
             var params = req.body
 
             //validar los datos
+            var validator_account=params.account
+            var validator_status=params.status
 
             try {
-                var validator_account=validator.isDecimal(params.account)
                 var validator_customer=!validator.isEmpty(params.customer)
-                var validator_status=validator.isBoolean(params.status)
 
             } catch (error) {
                 return res.status(404).send({
@@ -153,7 +144,7 @@ var controller={
                 })
             }
 
-            if( validator_account && validator_customer && validator_status){
+            if( validator_account!=null && validator_customer && validator_status!=null){
 
                 //hacer un find and Update
 
@@ -198,7 +189,40 @@ var controller={
         })
 
 
-    }
+    },
+
+    searchFeature:(req,res)=>{
+        //obtener los datos
+        var params = req.body
+
+        Feature.find({
+            '$and':[
+                {
+                    'customer':params.customer
+                },
+                {
+                    'status':true
+                }
+        ]
+    }).then((response)=>{
+        if(response==''){
+            return res.status(200).send({
+                status:'success',
+                message:'No se han encontrado coincidencias',
+                response
+            })
+
+        }
+
+        return res.status(200).send({
+            status:'success',
+            message:'se han encontrado coinciencias',
+            response
+        })
+    })
+
+
+    },
 }
 
 module.exports= controller;
